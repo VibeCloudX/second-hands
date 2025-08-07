@@ -5,8 +5,6 @@
 
 set -e
 
-echo "🚀 Flutter 개발 환경 설정을 시작합니다..."
-
 # 색상 정의
 RED='\033[0;31m'
 GREEN='\033[0;32m'
@@ -30,6 +28,28 @@ print_warning() {
 print_error() {
     echo -e "${RED}[ERROR]${NC} $1"
 }
+
+# 프로젝트 루트 디렉토리 확인
+check_project_root() {
+    if [ ! -f "pubspec.yaml" ] || [ ! -d ".openhands" ]; then
+        print_error "이 스크립트는 Flutter 프로젝트의 루트 디렉토리에서 실행해야 합니다."
+        print_error "현재 위치: $(pwd)"
+        echo ""
+        print_status "올바른 실행 방법:"
+        echo "  cd /path/to/your/flutter/project"
+        echo "  ./.openhands/setup.sh"
+        echo ""
+        print_warning "만약 .openhands 디렉토리 안에서 실행하고 있다면, 상위 디렉토리로 이동하세요:"
+        echo "  cd .."
+        echo "  ./.openhands/setup.sh"
+        exit 1
+    fi
+}
+
+echo "🚀 Flutter 개발 환경 설정을 시작합니다..."
+
+# 프로젝트 루트 디렉토리 확인
+check_project_root
 
 # Flutter SDK 설치 확인
 check_flutter() {

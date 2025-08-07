@@ -37,6 +37,24 @@ pre-commit install
 pre-commit run --all-files
 ```
 
+## ⚠️ 중요: 실행 위치
+
+**모든 스크립트는 반드시 Flutter 프로젝트의 루트 디렉토리에서 실행해야 합니다.**
+
+```bash
+# ✅ 올바른 실행 방법 (프로젝트 루트에서)
+cd /path/to/your/flutter/project
+./.openhands/setup.sh
+./.openhands/dev-tools.sh [명령어]
+./.openhands/pre-commit.sh
+
+# ❌ 잘못된 실행 방법 (.openhands 디렉토리 안에서)
+cd .openhands
+./setup.sh  # 이렇게 실행하면 오류가 발생합니다!
+```
+
+스크립트가 잘못된 위치에서 실행되면 자동으로 오류 메시지와 함께 올바른 실행 방법을 안내합니다.
+
 ## 🛠️ 스크립트 상세 설명
 
 ### setup.sh - 개발 환경 설정
@@ -152,6 +170,18 @@ OpenHands 환경에서 웹 앱을 실행할 때:
 `.pre-commit-config.yaml` 파일을 수정하여 새로운 hook을 추가하거나 기존 설정을 변경하세요.
 
 ## 🐛 문제 해결
+
+### 스크립트 실행 위치 오류
+```bash
+# 오류 메시지: "이 스크립트는 Flutter 프로젝트의 루트 디렉토리에서 실행해야 합니다"
+# 해결 방법: 프로젝트 루트 디렉토리로 이동
+cd /path/to/your/flutter/project
+./.openhands/[스크립트명].sh
+
+# .openhands 디렉토리 안에서 실행하고 있다면
+cd ..
+./.openhands/[스크립트명].sh
+```
 
 ### Flutter SDK를 찾을 수 없는 경우
 ```bash

@@ -29,6 +29,23 @@ print_error() {
     echo -e "${RED}[ERROR]${NC} $1"
 }
 
+# 프로젝트 루트 디렉토리 확인
+check_project_root() {
+    if [ ! -f "pubspec.yaml" ] || [ ! -d ".openhands" ]; then
+        print_error "이 스크립트는 Flutter 프로젝트의 루트 디렉토리에서 실행해야 합니다."
+        print_error "현재 위치: $(pwd)"
+        echo ""
+        print_status "올바른 실행 방법:"
+        echo "  cd /path/to/your/flutter/project"
+        echo "  ./.openhands/dev-tools.sh [명령어]"
+        echo ""
+        print_warning "만약 .openhands 디렉토리 안에서 실행하고 있다면, 상위 디렉토리로 이동하세요:"
+        echo "  cd .."
+        echo "  ./.openhands/dev-tools.sh [명령어]"
+        exit 1
+    fi
+}
+
 # 도움말 출력
 show_help() {
     echo "Flutter 개발 도구 스크립트"
@@ -216,6 +233,11 @@ generate_code() {
 # 메인 함수
 main() {
     local command=${1:-"help"}
+    
+    # 프로젝트 루트 디렉토리 확인 (help 명령어는 제외)
+    if [ "$command" != "help" ] && [ "$command" != "--help" ] && [ "$command" != "-h" ]; then
+        check_project_root
+    fi
     
     case $command in
         setup)
