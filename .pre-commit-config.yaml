@@ -1,0 +1,86 @@
+# Flutter Pre-commit Configuration
+# OpenHands Flutter Development
+
+repos:
+  # Flutter/Dart 관련 hooks
+  - repo: local
+    hooks:
+      # 커스텀 Flutter pre-commit 스크립트
+      - id: flutter-pre-commit
+        name: Flutter Pre-commit Checks
+        entry: .openhands/pre-commit.sh
+        language: script
+        files: \.dart$
+        pass_filenames: false
+        
+      # Dart 포맷팅
+      - id: dart-format
+        name: Dart Format
+        entry: dart format
+        language: system
+        files: \.dart$
+        
+      # Flutter 분석
+      - id: flutter-analyze
+        name: Flutter Analyze
+        entry: flutter analyze
+        language: system
+        files: \.dart$
+        pass_filenames: false
+
+  # 일반적인 파일 검사
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.5.0
+    hooks:
+      # 파일 끝 개행 확인
+      - id: end-of-file-fixer
+        exclude: \.lock$
+        
+      # 공백 제거
+      - id: trailing-whitespace
+        exclude: \.md$
+        
+      # 큰 파일 검사 (10MB)
+      - id: check-added-large-files
+        args: ['--maxkb=10240']
+        
+      # YAML 문법 검사
+      - id: check-yaml
+        files: \.ya?ml$
+        
+      # JSON 문법 검사
+      - id: check-json
+        
+      # 병합 충돌 마커 검사
+      - id: check-merge-conflict
+        
+      # 실행 권한이 있는 텍스트 파일 검사
+      - id: check-executables-have-shebangs
+        
+      # 케이스 충돌 검사
+      - id: check-case-conflict
+
+  # 커밋 메시지 검사 (선택사항)
+  - repo: https://github.com/compilerla/conventional-pre-commit
+    rev: v3.0.0
+    hooks:
+      - id: conventional-pre-commit
+        stages: [commit-msg]
+        args: [feat, fix, docs, style, refactor, test, chore, build, ci, perf, revert]
+
+# 기본 설정
+default_stages: [commit]
+fail_fast: false
+
+# CI 설정
+ci:
+  autofix_commit_msg: |
+    [pre-commit.ci] auto fixes from pre-commit.com hooks
+    
+    for more information, see https://pre-commit.ci
+  autofix_prs: true
+  autoupdate_branch: ''
+  autoupdate_commit_msg: '[pre-commit.ci] pre-commit autoupdate'
+  autoupdate_schedule: weekly
+  skip: []
+  submodules: false
