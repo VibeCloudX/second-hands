@@ -1,0 +1,29 @@
+documentation:
+  - README.md
+  - docs/**/*
+  - '**/*.md'
+
+ui:
+  - lib/**/*.dart
+  - '**/*.dart'
+  - any: ['lib/screens/**/*', 'lib/widgets/**/*', 'lib/pages/**/*']
+
+tests:
+  - test/**/*
+  - integration_test/**/*
+
+dependencies:
+  - pubspec.yaml
+  - pubspec.lock
+
+android:
+  - android/**/*
+
+ios:
+  - ios/**/*
+
+web:
+  - web/**/*
+
+ci:
+  - .github/workflows/**/*
