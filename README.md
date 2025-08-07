@@ -26,15 +26,16 @@ This project uses GitHub Actions for continuous integration and deployment:
    - Runs tests, linting, and code analysis
    - Uploads test coverage to Codecov
 
-2. **Build Workflow** (build.yml)
-   - Builds Android APK and Web release versions
+2. **Build Workflows** (build.yml, build_ios.yml)
+   - Builds Android APK, iOS app, and Web release versions
    - Triggered on push to main branch and PRs
    - Artifacts are uploaded for review
 
 3. **Deploy Workflow** (deploy.yml)
    - Triggered when a new tag is pushed (format: v*)
    - Creates a GitHub Release
-   - Builds and attaches APK to the release
+   - Builds and attaches APK and IPA to the release
+   - Uploads iOS build to TestFlight
    - Deploys web version to Firebase Hosting
 
 4. **Flutter Version Management** (flutter_version.yml)
@@ -51,5 +52,20 @@ To create a new release:
 ### Required Secrets
 
 For deployment to work properly, add these secrets to your GitHub repository:
+
+**Firebase (Web Deployment):**
 - `FIREBASE_SERVICE_ACCOUNT`: Firebase service account credentials
 - `FIREBASE_PROJECT_ID`: Your Firebase project ID
+
+**iOS Deployment:**
+- `APPLE_CERTIFICATE_BASE64`: Base64-encoded Apple distribution certificate (.p12)
+- `APPLE_CERTIFICATE_PASSWORD`: Password for the certificate
+- `APPLE_PROVISIONING_PROFILE_BASE64`: Base64-encoded provisioning profile
+- `KEYCHAIN_PASSWORD`: Password for the temporary keychain
+- `APPLE_TEAM_ID`: Your Apple Developer Team ID
+- `APPLE_ID`: Your Apple ID email
+- `BUNDLE_IDENTIFIER`: Your app's bundle identifier
+- `PROVISIONING_PROFILE_NAME`: Name of the provisioning profile
+- `APP_STORE_CONNECT_API_KEY_ID`: App Store Connect API Key ID
+- `APP_STORE_CONNECT_API_KEY_ISSUER_ID`: App Store Connect API Key Issuer ID
+- `APP_STORE_CONNECT_API_KEY_CONTENT`: App Store Connect API Key content
