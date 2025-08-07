@@ -23,8 +23,8 @@ jobs:
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: '3.16.x'  # 안정적인 LTS 버전
-          channel: 'stable'
+          flutter-version: '3.32.x'  # 최신 버전 (Dart SDK ^3.8.0 호환)
+          channel: 'beta'
           cache: true
       
       - name: Install dependencies
@@ -48,8 +48,8 @@ jobs:
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: '3.16.x'  # 안정적인 LTS 버전
-          channel: 'stable'
+          flutter-version: '3.32.x'  # 최신 버전 (Dart SDK ^3.8.0 호환)
+          channel: 'beta'
           cache: true
       
       - name: Install dependencies
