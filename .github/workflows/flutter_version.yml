@@ -1,0 +1,29 @@
+name: Flutter Version Management
+
+on:
+  push:
+    paths:
+      - '.fvm/fvm_config.json'
+      - 'pubspec.yaml'
+      - 'pubspec.lock'
+  workflow_dispatch:
+
+jobs:
+  validate_flutter_version:
+    name: Validate Flutter Version
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.19.x'
+          channel: 'stable'
+          cache: true
+      
+      - name: Validate dependencies
+        run: flutter pub get
+      
+      - name: Check for outdated packages
+        run: flutter pub outdated
